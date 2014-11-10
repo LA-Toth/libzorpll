@@ -264,7 +264,7 @@ z_mem_trace_bt(gpointer backt[])
       
       backt[i] = value;
       i++;
-      ebp = static_cast<gpointer *>(*ebp);
+      ebp = reinterpret_cast<gpointer *>(*ebp);
     }
   backt[i] = NULL;
 }
