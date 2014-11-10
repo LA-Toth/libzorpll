@@ -20,7 +20,7 @@ dnl ***************************************************************************
 dnl Dependencies
 
 LIBGLIB_MIN_VERSION=2.2.3
-OPENSSL_MIN_VERSION=0.9.8
+OPENSSL_MIN_VERSION=1.0.1
 
 dnl ***************************************************************************
 dnl Initial setup
