@@ -1,10 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Run this script to generate Makefile skeletons and configure
 # scripts.
 #
+PREFIX=
+if [[ $(which libtoolize) == '' && $(which glibtoolize) ]]; then
+  PREFIX=g
+fi
 
-libtoolize -f --copy || exit 1
+${PREFIX}libtoolize -f --copy || exit 1
 aclocal $* || exit 1
 autoheader || exit 1
 automake --add-missing --force-missing --copy || exit 1
