@@ -4,8 +4,8 @@
 # scripts.
 #
 
-libtoolize -f --copy
-aclocal $*
-autoheader
-automake --add-missing --force-missing --copy
-autoconf
+libtoolize -f --copy || exit 1
+aclocal $* || exit 1
+autoheader || exit 1
+automake --add-missing --force-missing --copy || exit 1
+autoconf || exit 1
