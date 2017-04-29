@@ -385,19 +385,22 @@ z_sockaddr_inet_new2(struct sockaddr_in *sinaddr)
 ZSockAddr *
 z_sockaddr_inet_new_hostname(const gchar *hostname, guint16 port)
 {
-  struct hostent hes, *he;
-  char hostbuf[1024];
+  struct addrinfo *ai = NULL;
   char buf[32];
-  int err = 0;
   int rc;
   ZSockAddr *saddr = NULL;
 
-  rc = gethostbyname_r(hostname, &hes, hostbuf, sizeof(hostbuf), &he, &err);
+  rc = getaddrinfo(hostname, NULL, NULL, &ai);
 
-  if (rc == 0 && he && he->h_addr_list[0])
+  if (rc == 0 && ai && ai->ai_addr)
     {
-      z_inet_ntoa(buf, sizeof(buf), *((struct in_addr *) he->h_addr_list[0]));
+      z_inet_ntoa(buf, sizeof(buf), ((struct sockaddr_in *) ai->ai_addr)->sin_addr);
       saddr = z_sockaddr_inet_new(buf, port);
+    }
+
+  if (ai)
+    {
+      freeaddrinfo(ai);
     }
 
   return saddr;
